@@ -43,6 +43,8 @@ project {
             buildType(SlowTest)
         }
     }
+
+    buildTypesOrder = listOf(Build, FastTest, SlowTest)
 }
 
 object Build : BuildType({
