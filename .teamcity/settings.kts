@@ -47,7 +47,7 @@ project {
         buildType(Package)
     }
 
-    buildTypesOrder = listOf(Build, FastTest, SlowTest)
+    buildTypesOrder = listOf(Build, FastTest, SlowTest, Package)
 }
 
 object Build : BuildType({
