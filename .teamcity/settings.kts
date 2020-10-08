@@ -31,11 +31,13 @@ version = "2020.1"
 project {
 
     buildType(Build)
-    buildType(Test)
+    buildType(FastTest)
+    buildType(SlowTest)
 
     sequential {
         buildType(Build)
-        buildType(Test)
+        buildType(FastTest)
+        buildType(SlowTest)
     }
 }
 
@@ -69,8 +71,9 @@ object Build : BuildType({
 })
 
 
-object Test : BuildType({
-    name = "mvn test"
+
+object FastTest : BuildType({
+    name = "mvn (fast) test"
 
     vcs {
         root(DslContext.settingsRoot)
@@ -79,6 +82,28 @@ object Test : BuildType({
     steps {
         maven {
             goals = "test"
+            runnerArgs = """-Dtest=*.unit.*Test"""
+        }
+    }
+
+    triggers {
+        vcs {
+        }
+    }
+})
+
+
+object SlowTest : BuildType({
+    name = "mvn (slow) test)"
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
+
+    steps {
+        maven {
+            goals = "test"
+            runnerArgs = """-Dtest=*.integration.*Test"""
         }
     }
 
