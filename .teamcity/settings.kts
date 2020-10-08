@@ -34,8 +34,8 @@ project {
         buildType(Mvn("Compile", "clean compile"))
 
         parallel {
-            buildType(Mvn("Test", "test", "-Dtest=\"*.unit.*Test\""))
-            buildType(Mvn("Test", "test", "-Dtest=\"*.integration.*Test\""))
+            buildType(Mvn("Fast Test", "test", "-Dtest=\"*.unit.*Test\""))
+            buildType(Mvn("Slow Test", "test", "-Dtest=\"*.integration.*Test\""))
         }
 
         buildType(Mvn("Package", "package", "-DskipTests"))
@@ -48,16 +48,16 @@ project {
 }
 
 
-class Mvn(name: String, val mavenGoals: String, val mavenRunnerArgs: String = "") : BuildType({
-    id("Build_${name}".toExtId())
-
+class Mvn(val configurationName: String, val mavenGoals: String, val mavenRunnerArgs: String = "") : BuildType({
+    id("Build_${configurationName}".toExtId())
+    name = configurationName
     vcs {
         root(DslContext.settingsRoot)
     }
 
     steps {
         maven {
-            goals = goals
+            goals = mavenGoals
             runnerArgs = mavenRunnerArgs
         }
     }
