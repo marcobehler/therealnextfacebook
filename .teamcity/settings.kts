@@ -56,13 +56,12 @@ project {
 }
 
 object Repo : GitVcsRoot ({
-   /* name = "${DslContext.getParameter("gitRepo")} Repo"
+    name = "${DslContext.getParameter("gitRepo")} Repo"
     url = DslContext.getParameter("gitUrl")
     branch = DslContext.getParameter("gitBranch")
-*/
-    name = "My GitHub Repo"
+  /*  name = "My GitHub Repo"
     url = "https://github.com/marcobehler/therealnextfacebook.git"
-    branch = "refs/heads/main"
+    branch = "refs/heads/main"*/
 })
 
 class Mvn(val configurationName: String, val mavenGoals: String, val mavenRunnerArgs: String = "") : BuildType({
