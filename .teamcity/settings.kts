@@ -27,12 +27,12 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2020.1"
 
 project {
-
     buildType(Build)
+    buildType(Test)
 }
 
 object Build : BuildType({
-    name = "Build"
+    name = "mvn clean compile"
 
     vcs {
         root(DslContext.settingsRoot)
@@ -40,8 +40,27 @@ object Build : BuildType({
 
     steps {
         maven {
-            goals = "clean package"
-            runnerArgs = "-Dmaven.test.failure.ignore=true"
+            goals = "clean compile"
+        }
+    }
+
+    triggers {
+        vcs {
+        }
+    }
+})
+
+
+object Test : BuildType({
+    name = "mvn test"
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
+
+    steps {
+        maven {
+            goals = "test"
         }
     }
 
