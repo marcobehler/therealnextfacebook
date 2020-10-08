@@ -51,9 +51,9 @@ object Build : BuildType({
     steps {
         maven {
             goals = "clean compile"
-            isIncremental = true
+            /*isIncremental = true
             dockerImagePlatform = MavenBuildStep.ImagePlatform.Windows
-            dockerImage = "maven:latest"
+            dockerImage = "maven:latest"*/
         }
     }
 
