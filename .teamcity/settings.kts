@@ -34,6 +34,7 @@ project {
     buildType(Build)
     buildType(FastTest)
     buildType(SlowTest)
+    buildType(Package)
 
     sequential {
         buildType(Build)
@@ -42,6 +43,8 @@ project {
             buildType(FastTest)
             buildType(SlowTest)
         }
+
+        buildType(Package)
     }
 
     buildTypesOrder = listOf(Build, FastTest, SlowTest)
@@ -63,10 +66,6 @@ object Build : BuildType({
         }
     }
 
-    triggers {
-        vcs {
-        }
-    }
 
     features {
 
@@ -92,11 +91,6 @@ object FastTest : BuildType({
         }
     }
 
-    triggers {
-        vcs {
-            watchChangesInDependencies = true
-        }
-    }
 })
 
 
@@ -114,9 +108,24 @@ object SlowTest : BuildType({
         }
     }
 
+})
+
+object Package : BuildType({
+    name = "Package"
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
+
+    steps {
+        maven {
+            goals = "package"
+            runnerArgs = "-DskipTests"
+        }
+    }
+
     triggers {
         vcs {
-            watchChangesInDependencies = true
         }
     }
 })
