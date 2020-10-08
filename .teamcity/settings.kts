@@ -42,7 +42,7 @@ project {
     }
 
 
-    chain.buildTypes().forEach{ bt -> buildType { bt }}
+    chain.buildTypes().forEach{ bt -> buildType (bt) }
 
     //buildTypesOrder = listOf(Build, FastTest, SlowTest, Package)
 }
