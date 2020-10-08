@@ -92,6 +92,7 @@ object FastTest : BuildType({
 
     triggers {
         vcs {
+            watchChangesInDependencies = true
         }
     }
 })
@@ -113,6 +114,7 @@ object SlowTest : BuildType({
 
     triggers {
         vcs {
+            watchChangesInDependencies = true
         }
     }
 })
