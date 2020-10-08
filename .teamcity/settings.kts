@@ -38,7 +38,12 @@ project {
             buildType(Mvn("Slow Test", "test", "-Dtest=\"*.integration.*Test\""))
         }
 
-        buildType(Mvn("Package", "package", "-DskipTests"))
+        val p = Mvn("Package", "package", "-DskipTests")
+        p.triggers {
+            vcs {
+            }
+        }
+        buildType(p)
     }
 
 
@@ -59,12 +64,6 @@ class Mvn(val configurationName: String, val mavenGoals: String, val mavenRunner
         maven {
             goals = mavenGoals
             runnerArgs = mavenRunnerArgs
-        }
-    }
-
-    triggers {
-        vcs {
-            watchChangesInDependencies = true
         }
     }
 })
