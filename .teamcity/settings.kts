@@ -1,4 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.freeDiskSpace
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.MavenBuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.maven
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 
@@ -27,8 +29,10 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2020.1"
 
 project {
-    buildType(Build)
-    buildType(Test)
+    sequential {
+        buildType(Build)
+        buildType(Test)
+    }
 }
 
 object Build : BuildType({
@@ -41,11 +45,21 @@ object Build : BuildType({
     steps {
         maven {
             goals = "clean compile"
+            isIncremental = true
+            dockerImagePlatform = MavenBuildStep.ImagePlatform.Windows
+            dockerImage = "maven:latest"
         }
     }
 
     triggers {
         vcs {
+        }
+    }
+
+    features {
+
+        freeDiskSpace {
+            failBuild = true
         }
     }
 })
