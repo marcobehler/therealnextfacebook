@@ -26,7 +26,7 @@ public class ThenextfacebookApplicationTest {
 	@Test
 	void registrationWorksThroughAllLayers() throws Exception {
 		logger.info("");
-		Thread.sleep(5000);
+		Thread.sleep(10000);
 
 		mockMvc.perform(get("/")
 				.contentType("text/html"))
