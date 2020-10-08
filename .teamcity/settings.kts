@@ -57,7 +57,7 @@ project {
 
 object Repo : GitVcsRoot ({
     name = "My GitHub Repo"
-    url = "https://github.com/marcobehler/therealnextfacebook.git"
+    url = "https://github.com/marcobehler/therealnextfacebook.git#refs/heads/main"
 })
 
 class Mvn(val configurationName: String, val mavenGoals: String, val mavenRunnerArgs: String = "") : BuildType({
