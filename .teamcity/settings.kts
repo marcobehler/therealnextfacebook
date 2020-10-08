@@ -3,6 +3,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.freeDiskSpace
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.maven
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.v2019_2.vcs.GitVcsRoot
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -30,6 +31,8 @@ version = "2020.1"
 
 project {
 
+    vcsRoot(Repo)
+
     var chain = sequential {
         buildType(Mvn("Compile", "clean compile"))
 
@@ -52,12 +55,16 @@ project {
     //buildTypesOrder = listOf(Build, FastTest, SlowTest, Package)
 }
 
+object Repo : GitVcsRoot ({
+    name = "My GitHub Repo"
+    url = "https://github.com/marcobehler/therealnextfacebook.git"
+})
 
 class Mvn(val configurationName: String, val mavenGoals: String, val mavenRunnerArgs: String = "") : BuildType({
     id("Build_${configurationName}".toExtId())
     name = configurationName
     vcs {
-        root(DslContext.settingsRoot)
+        root(Repo)
     }
 
     steps {
