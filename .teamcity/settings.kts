@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.StageFactory.parallel
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.freeDiskSpace
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.MavenBuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.maven
@@ -36,13 +37,16 @@ project {
 
     sequential {
         buildType(Build)
-        buildType(FastTest)
-        buildType(SlowTest)
+
+        parallel {
+            buildType(FastTest)
+            buildType(SlowTest)
+        }
     }
 }
 
 object Build : BuildType({
-    name = "mvn clean compile"
+    name = "Compile"
 
     vcs {
         root(DslContext.settingsRoot)
@@ -73,7 +77,7 @@ object Build : BuildType({
 
 
 object FastTest : BuildType({
-    name = "mvn (fast) test"
+    name = "Fast Test"
 
     vcs {
         root(DslContext.settingsRoot)
@@ -94,7 +98,7 @@ object FastTest : BuildType({
 
 
 object SlowTest : BuildType({
-    name = "mvn (slow) test)"
+    name = "Slow Test"
 
     vcs {
         root(DslContext.settingsRoot)
